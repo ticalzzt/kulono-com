@@ -156,6 +156,26 @@
     color: rgba(224, 224, 224, 0.15);
   }
 
+  .nav-enter {
+    position: fixed;
+    top: 24px;
+    right: 32px;
+    display: flex;
+    gap: 24px;
+    z-index: 10;
+  }
+
+  .nav-enter a {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(224, 224, 224, 0.25);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-enter a:hover { color: rgba(224, 224, 224, 0.7); }
+
   /* Particle dots — subtle */
   .particles {
     position: fixed;
@@ -206,6 +226,11 @@
     <span class="arrow">→</span>
     <span class="lono">Lono</span>
   </div>
+</div>
+
+<div class="nav-enter">
+  <a href="trade.html">Trade</a>
+  <a href="anchor.html">Anchor</a>
 </div>
 
 <div class="footer">ticalasi · reality anchor</div>
