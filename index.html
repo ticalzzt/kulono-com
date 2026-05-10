@@ -1,27 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kulono.com — Test Lab</title>
-    <meta name="description" content="testing ground for SG worker + Kouzi">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-               background: #0a0e17; color: #e8edf5; display: flex;
-               align-items: center; justify-content: center; min-height: 100vh; }
-        .card { text-align: center; }
-        h1 { font-size: 48px; font-weight: 800; letter-spacing: -2px; margin-bottom: 16px;
-             background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        p { color: #6b7280; font-size: 16px; max-width: 400px; line-height: 1.6; }
-        .tag { margin-top: 32px; font-size: 12px; color: #374151; text-transform: uppercase; letter-spacing: 1px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kulono</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0a;
+    color: #e0e0e0;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  .scene {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  /* Kū glow — left */
+  .glow-ku {
+    position: fixed;
+    left: -10%;
+    top: 20%;
+    width: 55vw;
+    height: 55vw;
+    background: radial-gradient(circle, rgba(180, 50, 20, 0.12) 0%, transparent 70%);
+    animation: breathe-ku 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Lono glow — right */
+  .glow-lono {
+    position: fixed;
+    right: -10%;
+    bottom: 10%;
+    width: 55vw;
+    height: 55vw;
+    background: radial-gradient(circle, rgba(20, 140, 80, 0.10) 0%, transparent 70%);
+    animation: breathe-lono 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes breathe-ku {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.08); }
+  }
+  @keyframes breathe-lono {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.06); }
+  }
+
+  /* Divider line — the cycle */
+  .divider {
+    width: 1px;
+    height: 120px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(180, 50, 20, 0.4) 30%,
+      rgba(220, 160, 60, 0.6) 50%,
+      rgba(20, 140, 80, 0.4) 70%,
+      transparent
+    );
+    margin-bottom: 40px;
+    animation: pulse-line 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse-line {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+
+  .title {
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 200;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    background: linear-gradient(
+      135deg,
+      #b43214 0%,
+      #d4a040 35%,
+      #f0e8d8 50%,
+      #3aaa60 65%,
+      #148c50 100%
+    );
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shift-gradient 12s ease-in-out infinite;
+  }
+
+  @keyframes shift-gradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .subtitle {
+    margin-top: 24px;
+    font-size: clamp(0.75rem, 1.5vw, 1rem);
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: rgba(224, 224, 224, 0.5);
+    text-transform: uppercase;
+  }
+
+  .concept {
+    margin-top: 60px;
+    max-width: 420px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(224, 224, 224, 0.35);
+  }
+
+  .concept strong {
+    color: rgba(224, 224, 224, 0.6);
+    font-weight: 400;
+  }
+
+  .cycle-mark {
+    margin-top: 48px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(224, 224, 224, 0.25);
+  }
+
+  .cycle-mark .ku { color: rgba(180, 50, 20, 0.6); }
+  .cycle-mark .lono { color: rgba(20, 140, 80, 0.6); }
+  .cycle-mark .arrow { color: rgba(224, 224, 224, 0.2); font-size: 0.9rem; }
+
+  .footer {
+    position: fixed;
+    bottom: 24px;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(224, 224, 224, 0.15);
+  }
+
+  /* Particle dots — subtle */
+  .particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .dot {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    animation: float linear infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+  }
+</style>
 </head>
 <body>
-    <div class="card">
-        <h1>kulono</h1>
-        <p>Test environment for tical-code AI agents.<br>SG worker · Kouzi · tical-chat</p>
-        <div class="tag">ticalasi ecosystem</div>
-    </div>
+
+<div class="glow-ku"></div>
+<div class="glow-lono"></div>
+
+<div class="particles" id="particles"></div>
+
+<div class="scene">
+  <div class="divider"></div>
+  <div class="title">Kulono</div>
+  <div class="subtitle">Where extraction meets return</div>
+  <div class="concept">
+    From Kū, the force that takes.<br>
+    To Lono, the grace that gives back.<br><br>
+    <strong>Capital leaves the virtual.<br>
+    It arrives in the real.</strong>
+  </div>
+  <div class="cycle-mark">
+    <span class="ku">Kū</span>
+    <span class="arrow">→</span>
+    <span class="lono">Lono</span>
+    <span class="arrow">→</span>
+    <span class="ku">Kū</span>
+    <span class="arrow">→</span>
+    <span class="lono">Lono</span>
+  </div>
+</div>
+
+<div class="footer">ticalasi · reality anchor</div>
+
+<script>
+  // Subtle floating particles
+  const container = document.getElementById('particles');
+  const colors = ['rgba(180,50,20,0.3)', 'rgba(20,140,80,0.25)', 'rgba(220,160,60,0.2)'];
+  for (let i = 0; i < 30; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    dot.style.left = Math.random() * 100 + '%';
+    dot.style.bottom = '-2px';
+    dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+    dot.style.animationDuration = (8 + Math.random() * 12) + 's';
+    dot.style.animationDelay = (Math.random() * 15) + 's';
+    container.appendChild(dot);
+  }
+</script>
+
 </body>
 </html>
