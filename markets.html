@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kulono — Markets</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #181818;
+    --border: #222222;
+    --text: #e0e0e0;
+    --text-dim: #666666;
+    --ku: #b43214;
+    --ku-dim: rgba(180,50,20,0.15);
+    --lono: #148c50;
+    --lono-dim: rgba(20,140,80,0.12);
+    --gold: #c8960a;
+    --gold-dim: rgba(200,150,10,0.15);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── Nav ─── */
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  .nav-logo {
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+  /* ─── Hero ─── */
+  .hero {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 32px 60px;
+    position: relative;
+  }
+
+  .hero-glow-ku {
+    position: absolute;
+    left: -15%;
+    top: 10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(180,50,20,0.10) 0%, transparent 70%);
+    animation: breathe-ku 8s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .hero-glow-lono {
+    position: absolute;
+    right: -15%;
+    bottom: 5%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(20,140,80,0.08) 0%, transparent 70%);
+    animation: breathe-lono 8s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes breathe-ku {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.08); }
+  }
+  @keyframes breathe-lono {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.06); }
+  }
+
+  .hero-eyebrow {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 200;
+    line-height: 1.2;
+    max-width: 800px;
+  }
+
+  .hero-title .ku-word { color: var(--ku); font-weight: 400; }
+  .hero-title .lono-word { color: var(--lono); font-weight: 400; }
+  .hero-title .gold-word { color: var(--gold); font-weight: 400; }
+
+  .hero-subtitle {
+    margin-top: 32px;
+    font-size: clamp(0.85rem, 1.2vw, 1.05rem);
+    font-weight: 300;
+    color: rgba(224,224,224,0.45);
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  .hero-divider {
+    width: 1px;
+    height: 80px;
+    margin-top: 48px;
+    background: linear-gradient(to bottom, transparent, rgba(180,50,20,0.4), rgba(200,150,10,0.5), rgba(20,140,80,0.4), transparent);
+    animation: pulse-line 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse-line {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+
+  /* ─── Section common ─── */
+  section {
+    padding: 80px 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 200;
+    margin-bottom: 8px;
+  }
+
+  .section-desc {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-weight: 300;
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 48px;
+  }
+
+  /* ─── Market Cards Grid ─── */
+  .market-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 20px;
+  }
+
+  .market-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .market-card:hover { border-color: rgba(224,224,224,0.15); }
+
+  .market-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+  }
+
+  .market-card.ku-card::before { background: linear-gradient(90deg, transparent, var(--ku), transparent); }
+  .market-card.gold-card::before { background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .market-card.lono-card::before { background: linear-gradient(90deg, transparent, var(--lono), transparent); }
+
+  .card-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  .card-name {
+    font-size: 0.95rem;
+    font-weight: 400;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .card-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 500;
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+  }
+
+  .card-unit {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+  }
+
+  .card-detail {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .card-detail span { color: rgba(224,224,224,0.6); font-weight: 400; }
+
+  .card-source {
+    margin-top: 16px;
+    font-size: 0.6rem;
+    color: rgba(102,102,102,0.6);
+    font-style: italic;
+  }
+
+  /* Mini sparkline SVG */
+  .sparkline {
+    margin-top: 16px;
+    opacity: 0.5;
+  }
+
+  /* ─── Index sub-grid ─── */
+  .index-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .index-chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+
+  .index-chip-name {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+
+  .index-chip-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+
+  /* ─── Comparison Section ─── */
+  .comparison-list {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .comparison-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .comparison-item::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+  }
+
+  .comparison-item.impact-water::after { background: linear-gradient(to bottom, var(--ku), var(--lono)); }
+  .comparison-item.impact-energy::after { background: linear-gradient(to bottom, var(--gold), var(--lono)); }
+  .comparison-item.impact-africa::after { background: linear-gradient(to bottom, var(--ku), var(--gold)); }
+  .comparison-item.impact-food::after { background: linear-gradient(to bottom, var(--lono), var(--gold)); }
+
+  .comp-headline {
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    font-weight: 300;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  .comp-headline strong {
+    font-weight: 500;
+  }
+
+  .comp-headline .ku-hl { color: var(--ku); }
+  .comp-headline .lono-hl { color: var(--lono); }
+  .comp-headline .gold-hl { color: var(--gold); }
+
+  /* Bar comparison */
+  .bar-compare {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .bar-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    width: 120px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 24px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    position: relative;
+    transition: width 1.5s ease;
+  }
+
+  .bar-fill.ku-fill { background: linear-gradient(90deg, var(--ku), rgba(180,50,20,0.6)); }
+  .bar-fill.gold-fill { background: linear-gradient(90deg, var(--gold), rgba(200,150,10,0.6)); }
+  .bar-fill.lono-fill { background: linear-gradient(90deg, var(--lono), rgba(20,140,80,0.6)); }
+
+  .bar-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 400;
+    margin-left: 12px;
+    white-space: nowrap;
+    color: var(--text);
+  }
+
+  .bar-marker {
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    width: 2px;
+    z-index: 2;
+  }
+
+  .bar-marker-label {
+    position: absolute;
+    top: -20px;
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transform: translateX(-50%);
+  }
+
+  .comp-source {
+    margin-top: 20px;
+    font-size: 0.6rem;
+    color: rgba(102,102,102,0.5);
+    font-style: italic;
+  }
+
+  /* ─── What If Section ─── */
+  .whatif-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .whatif-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .whatif-card:hover { border-color: rgba(224,224,224,0.12); }
+
+  .whatif-pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2.4rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .whatif-pct-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+  }
+
+  .whatif-results {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .whatif-result-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .whatif-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1rem;
+  }
+
+  .whatif-icon.water-icon { background: rgba(20,140,80,0.15); }
+  .whatif-icon.energy-icon { background: rgba(200,150,10,0.15); }
+  .whatif-icon.land-icon { background: rgba(180,50,20,0.15); }
+  .whatif-icon.health-icon { background: rgba(200,150,10,0.12); }
+
+  .whatif-result-text {
+    font-size: 0.8rem;
+    font-weight: 300;
+    line-height: 1.5;
+    color: rgba(224,224,224,0.7);
+  }
+
+  .whatif-result-text strong {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  /* ─── Closing ─── */
+  .closing {
+    text-align: center;
+    padding: 100px 32px;
+    position: relative;
+  }
+
+  .closing-glow {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 40vw;
+    height: 40vw;
+    background: radial-gradient(circle, rgba(200,150,10,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    animation: breathe-lono 6s ease-in-out infinite;
+  }
+
+  .closing-cycle {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .closing-cycle .ku { color: var(--ku); }
+  .closing-cycle .lono { color: var(--lono); }
+  .closing-cycle .arrow { color: rgba(224,224,224,0.2); }
+
+  .closing-title {
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-weight: 200;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+
+  .closing-title .gold-word { color: var(--gold); font-weight: 400; }
+
+  .closing-sub {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(224,224,224,0.35);
+    max-width: 440px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .closing-cta {
+    margin-top: 40px;
+    display: inline-block;
+    padding: 12px 36px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .closing-cta:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* ─── Footer ─── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 32px;
+    text-align: center;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(224,224,224,0.15);
+  }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 768px) {
+    .nav { padding: 12px 16px; }
+    .nav-links { gap: 14px; }
+    section { padding: 48px 16px; }
+    .hero { padding: 60px 16px 40px; min-height: 70vh; }
+    .market-grid { grid-template-columns: 1fr; }
+    .whatif-grid { grid-template-columns: 1fr; }
+    .bar-label { width: 80px; font-size: 0.55rem; }
+    .comparison-item { padding: 24px 20px; }
+  }
+
+  @media (max-width: 480px) {
+    .index-row { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ─── Animations ─── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── Nav ─── -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">Kulono</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Origin</a></li>
+    <li><a href="trade.html">Trade</a></li>
+    <li><a href="anchor.html">Anchor</a></li>
+    <li><a href="markets.html" class="active">Markets</a></li>
+  </ul>
+</nav>
+
+<!-- ─── Hero ─── -->
+<div class="hero">
+  <div class="hero-glow-ku"></div>
+  <div class="hero-glow-lono"></div>
+  <div class="hero-eyebrow">Global Capital vs. Human Need</div>
+  <h1 class="hero-title">
+    The <span class="ku-word">virtual</span> moves trillions.<br>
+    The <span class="lono-word">real</span> asks for <span class="gold-word">fractions</span>.
+  </h1>
+  <p class="hero-subtitle">
+    Every day, financial markets move more money than it would take to solve the world's most pressing crises — many times over. The gap isn't in resources. It's in direction.
+  </p>
+  <div class="hero-divider"></div>
+</div>
+
+<!-- ─── Global Market Data ─── -->
+<section>
+  <div class="section-label">Section 01</div>
+  <h2 class="section-title">The Weight of Virtual Capital</h2>
+  <p class="section-desc">Current scale of the world's financial markets. Each number represents a force powerful enough to reshape reality — if redirected.</p>
+
+  <div class="market-grid">
+
+    <!-- Global Equities -->
+    <div class="market-card ku-card fade-in">
+      <div class="card-label">Equity Markets</div>
+      <div class="card-name">Global Stock Market Capitalization</div>
+      <div class="card-value">$127.4T</div>
+      <div class="card-unit">Trillion USD · Early 2026</div>
+      <div class="index-row">
+        <div class="index-chip">
+          <div class="index-chip-name">S&P 500</div>
+          <div class="index-chip-val">$28.5T</div>
+        </div>
+        <div class="index-chip">
+          <div class="index-chip-name">Nasdaq</div>
+          <div class="index-chip-val">$26.2T</div>
+        </div>
+        <div class="index-chip">
+          <div class="index-chip-name">CSI 300</div>
+          <div class="index-chip-val">$14.4T</div>
+        </div>
+        <div class="index-chip">
+          <div class="index-chip-name">Nikkei 225</div>
+          <div class="index-chip-val">$8.1T</div>
+        </div>
+        <div class="index-chip">
+          <div class="index-chip-name">STOXX Europe</div>
+          <div class="index-chip-val">$7.8T</div>
+        </div>
+        <div class="index-chip">
+          <div class="index-chip-name">HKEX</div>
+          <div class="index-chip-val">$7.5T</div>
+        </div>
+      </div>
+      <svg class="sparkline" width="100%" height="32" viewBox="0 0 200 32" preserveAspectRatio="none">
+        <polyline fill="none" stroke="rgba(180,50,20,0.4)" stroke-width="1.5"
+          points="0,28 20,26 40,22 60,24 80,18 100,16 120,12 140,10 160,8 180,6 200,4"/>
+      </svg>
+      <div class="card-source">Source: PwC Global Top 100 (2026); WFE; Siblis Research</div>
+    </div>
+
+    <!-- Global Bonds -->
+    <div class="market-card gold-card fade-in">
+      <div class="card-label">Fixed Income</div>
+      <div class="card-name">Global Bond Market Outstanding</div>
+      <div class="card-value">$127.4T</div>
+      <div class="card-unit">Trillion USD · 2026 Estimate</div>
+      <div class="card-detail">
+        OECD sovereign outstanding: <span>$61T</span><br>
+        Corporate bonds outstanding: <span>$36.4T</span><br>
+        Annual issuance 2026 forecast: <span>$10.8T</span>
+      </div>
+      <svg class="sparkline" width="100%" height="32" viewBox="0 0 200 32" preserveAspectRatio="none">
+        <polyline fill="none" stroke="rgba(200,150,10,0.4)" stroke-width="1.5"
+          points="0,24 25,22 50,20 75,22 100,18 125,14 150,10 175,8 200,6"/>
+      </svg>
+      <div class="card-source">Source: OECD Global Debt Report 2026; Mordor Intelligence</div>
+    </div>
+
+    <!-- Forex -->
+    <div class="market-card ku-card fade-in">
+      <div class="card-label">Foreign Exchange</div>
+      <div class="card-name">Forex Daily Trading Volume</div>
+      <div class="card-value">$9.5T</div>
+      <div class="card-unit">Trillion USD per day · April 2025</div>
+      <div class="card-detail">
+        FX Spot: <span>$3.0T/day</span> (+42% from 2022)<br>
+        FX Swaps: <span>$4.0T/day</span><br>
+        Outright Forwards: <span>$1.8T/day</span> (+60% from 2022)<br>
+        30× global daily GDP
+      </div>
+      <svg class="sparkline" width="100%" height="32" viewBox="0 0 200 32" preserveAspectRatio="none">
+        <polyline fill="none" stroke="rgba(180,50,20,0.4)" stroke-width="1.5"
+          points="0,26 30,24 60,22 90,18 120,16 150,12 180,6 200,4"/>
+      </svg>
+      <div class="card-source">Source: BIS Triennial Central Bank Survey, April 2025</div>
+    </div>
+
+    <!-- Derivatives -->
+    <div class="market-card gold-card fade-in">
+      <div class="card-label">Derivatives</div>
+      <div class="card-name">OTC Derivatives Notional Outstanding</div>
+      <div class="card-value">$846T</div>
+      <div class="card-unit">Trillion USD · June 2025</div>
+      <div class="card-detail">
+        Interest Rate Derivatives: <span>$666T</span><br>
+        FX Derivatives: <span>$155T</span><br>
+        Credit Default Swaps: <span>$11T</span><br>
+        +16% year-on-year — largest growth since 2008
+      </div>
+      <svg class="sparkline" width="100%" height="32" viewBox="0 0 200 32" preserveAspectRatio="none">
+        <polyline fill="none" stroke="rgba(200,150,10,0.4)" stroke-width="1.5"
+          points="0,20 25,22 50,18 75,20 100,16 125,14 150,10 175,6 200,4"/>
+      </svg>
+      <div class="card-source">Source: BIS OTC Derivatives Statistics, H1 2025</div>
+    </div>
+
+    <!-- Crypto -->
+    <div class="market-card lono-card fade-in" style="grid-column: 1 / -1;">
+      <div class="card-label">Digital Assets</div>
+      <div class="card-name">Cryptocurrency Total Market Capitalization</div>
+      <div class="card-value" style="display:inline;">$3.4T</div>
+      <div class="card-unit" style="display:inline; margin-left:8px;">Trillion USD · Early 2026</div>
+      <div class="card-detail" style="margin-top:16px; max-width:600px;">
+        Bitcoin dominance: <span>~58%</span> · Ethereum: <span>~10%</span> ·
+        Daily spot volume: <span>~$150B</span><br>
+        Less than 2.7% of global equity market cap — yet already exceeds the GDP of France.
+      </div>
+      <svg class="sparkline" width="100%" height="32" viewBox="0 0 200 32" preserveAspectRatio="none">
+        <polyline fill="none" stroke="rgba(20,140,80,0.4)" stroke-width="1.5"
+          points="0,28 20,24 40,26 60,18 80,22 100,14 120,10 140,16 160,8 180,6 200,5"/>
+      </svg>
+      <div class="card-source">Source: CoinGecko; CompaniesMarketCap</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── Comparison Impact ─── -->
+<section>
+  <div class="section-label">Section 02</div>
+  <h2 class="section-title">When You See the Numbers Side by Side</h2>
+  <p class="section-desc">The financial system doesn't lack capital. It lacks a valve. Every comparison below is based on verified data — not hyperbole.</p>
+
+  <div class="comparison-list">
+
+    <!-- Comparison 1: Water -->
+    <div class="comparison-item impact-water fade-in">
+      <div class="comp-headline">
+        Global stock markets trade <strong class="ku-hl">$500 billion</strong> in a single day.<br>
+        Solving the global water crisis requires <strong class="lono-hl">$114 billion</strong> per year.
+      </div>
+      <div class="bar-compare">
+        <div class="bar-row">
+          <div class="bar-label">Daily stock volume</div>
+          <div class="bar-track">
+            <div class="bar-fill ku-fill" style="width:100%;" data-width="100"></div>
+          </div>
+          <div class="bar-value">$500B / day</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Water need / year</div>
+          <div class="bar-track">
+            <div class="bar-fill lono-fill" style="width:22.8%;" data-width="22.8"></div>
+          </div>
+          <div class="bar-value">$114B / year</div>
+        </div>
+      </div>
+      <div class="comp-source">
+        Sources: WFE daily turnover data; World Bank Water Global Practice (2025): $114B/year needed for universal access to safe water & sanitation by 2030. 2 billion people still lack safely managed drinking water.
+      </div>
+    </div>
+
+    <!-- Comparison 2: Energy -->
+    <div class="comparison-item impact-energy fade-in">
+      <div class="comp-headline">
+        Forex markets trade <strong class="gold-hl">$9.5 trillion</strong> every day.<br>
+        One hour of forex trading ≈ <strong class="lono-hl">$400 billion</strong> — enough to build <strong class="gold-hl">8 Grand Inga Dams</strong>.
+      </div>
+      <div class="bar-compare">
+        <div class="bar-row">
+          <div class="bar-label">1 hour forex</div>
+          <div class="bar-track">
+            <div class="bar-fill gold-fill" style="width:100%;" data-width="100"></div>
+          </div>
+          <div class="bar-value">~$400B</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Grand Inga Dam</div>
+          <div class="bar-track">
+            <div class="bar-fill lono-fill" style="width:12.5%;" data-width="12.5"></div>
+          </div>
+          <div class="bar-value">$80B each</div>
+        </div>
+      </div>
+      <div class="comp-source">
+        Sources: BIS Triennial Survey 2025 ($9.5T/day ÷ 24h ≈ $400B/hour); Grand Inga Hydroelectric Project, DRC — $80B estimated cost, 42GW capacity, enough to power half of sub-Saharan Africa (World Bank, SADC).
+      </div>
+    </div>
+
+    <!-- Comparison 3: Africa Electricity -->
+    <div class="comparison-item impact-africa fade-in">
+      <div class="comp-headline">
+        <strong class="ku-hl">0.01%</strong> of the derivatives market's notional value = <strong class="gold-hl">$84.6 billion</strong>.<br>
+        That alone could <strong class="gold-hl">electrify all of sub-Saharan Africa</strong> — and have $34B left over.
+      </div>
+      <div class="bar-compare">
+        <div class="bar-row">
+          <div class="bar-label">0.01% deriv.</div>
+          <div class="bar-track">
+            <div class="bar-fill ku-fill" style="width:100%;" data-width="100"></div>
+          </div>
+          <div class="bar-value">$84.6B</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">SSA electrify</div>
+          <div class="bar-track">
+            <div class="bar-fill lono-fill" style="width:59.6%;" data-width="59.6"></div>
+          </div>
+          <div class="bar-value">~$50B needed</div>
+        </div>
+      </div>
+      <div class="comp-source">
+        Sources: BIS OTC Derivatives $846T outstanding × 0.01% = $84.6B; IEA estimates $25B/year for a decade to modernize sub-Saharan Africa's electricity sector; $150B cumulative to 2035 for universal access (IEA 2024; IMF 2024). 600 million Africans still lack electricity.
+      </div>
+    </div>
+
+    <!-- Comparison 4: Food -->
+    <div class="comparison-item impact-food fade-in">
+      <div class="comp-headline">
+        The global bond market's <strong class="gold-hl">annual interest payments</strong> exceed <strong class="ku-hl">$5 trillion</strong>.<br>
+        Transforming the world's food systems requires <strong class="lono-hl">$400 billion/year</strong> — just <strong class="gold-hl">8%</strong> of that interest.
+      </div>
+      <div class="bar-compare">
+        <div class="bar-row">
+          <div class="bar-label">Bond interest/yr</div>
+          <div class="bar-track">
+            <div class="bar-fill gold-fill" style="width:100%;" data-width="100"></div>
+          </div>
+          <div class="bar-value">>$5T / year</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Food transform</div>
+          <div class="bar-track">
+            <div class="bar-fill lono-fill" style="width:8%;" data-width="8"></div>
+          </div>
+          <div class="bar-value">$400B / year</div>
+        </div>
+      </div>
+      <div class="comp-source">
+        Sources: OECD Global Debt Report 2026 — average yield >4% on $127T outstanding; FAO/CFS HLPE (2025): $400B/year mid-range estimate for food systems transformation; cost of malnutrition alone = $5.3T/year (5% of global GDP).
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── What If ─── -->
+<section>
+  <div class="section-label">Section 03</div>
+  <h2 class="section-title">What If</h2>
+  <p class="section-desc">If a fraction of global trading fees — not profits, just fees — flowed back to reality. What could that world look like?</p>
+
+  <div class="whatif-grid">
+
+    <!-- 0.1% -->
+    <div class="whatif-card fade-in">
+      <div class="whatif-pct" style="color: var(--lono);">0.1%</div>
+      <div class="whatif-pct-label">Of global trading volume redirected</div>
+      <div class="whatif-results">
+        <div class="whatif-result-row">
+          <div class="whatif-icon water-icon">💧</div>
+          <div class="whatif-result-text">
+            <strong>$35B / year</strong> — universal access to clean water & sanitation for 2 billion people (World Bank: $114B over ~3 years)
+          </div>
+        </div>
+        <div class="whatif-result-row">
+          <div class="whatif-icon energy-icon">⚡</div>
+          <div class="whatif-result-text">
+            <strong>140 GW</strong> of new renewable capacity — more than Africa's entire current installed power generation
+          </div>
+        </div>
+        <div class="whatif-result-row">
+          <div class="whatif-icon land-icon">🌿</div>
+          <div class="whatif-result-text">
+            <strong>350M hectares</strong> of degraded land restored — an area the size of India
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 0.5% -->
+    <div class="whatif-card fade-in">
+      <div class="whatif-pct" style="color: var(--gold);">0.5%</div>
+      <div class="whatif-pct-label">Of global trading volume redirected</div>
+      <div class="whatif-results">
+        <div class="whatif-result-row">
+          <div class="whatif-icon water-icon">💧</div>
+          <div class="whatif-result-text">
+            <strong>$175B / year</strong> — solves the global water crisis <em>and</em> funds the €6.5T infrastructure gap within 15 years (WEF 2026)
+          </div>
+        </div>
+        <div class="whatif-result-row">
+          <div class="whatif-icon energy-icon">⚡</div>
+          <div class="whatif-result-text">
+            <strong>700 GW</strong> of renewable energy — enough to power 1.4 billion homes, eliminating energy poverty worldwide
+          </div>
+        </div>
+        <div class="whatif-result-row">
+          <div class="whatif-icon health-icon">🏥</div>
+          <div class="whatif-result-text">
+            <strong>$175B / year</strong> — closes the healthcare infrastructure gap in developing nations ($2.4T over 7 years = $343B/year, this covers >50%)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1% -->
+    <div class="whatif-card fade-in">
+      <div class="whatif-pct" style="color: var(--ku);">1.0%</div>
+      <div class="whatif-pct-label">Of global trading volume redirected</div>
+      <div class="whatif-results">
+        <div class="whatif-result-row">
+          <div class="whatif-icon water-icon">💧</div>
+          <div class="whatif-result-text">
+            <strong>$350B / year</strong> — achieves food systems transformation globally AND solves water & sanitation
+          </div>
+        </div>
+        <div class="whatif-result-row">
+          <div class="whatif-icon energy-icon">⚡</div>
+          <div class="whatif-result-text">
+            <strong>1.4 TW</strong> of clean energy capacity — exceeds the total electricity consumption of Africa, South America, and Southeast Asia combined
+          </div>
+        </div>
+        <div class="whatif-result-row">
+          <div class="whatif-icon land-icon">🌍</div>
+          <div class="whatif-result-text">
+            <strong>3.5 billion hectares</strong> of ecosystem restoration — roughly 23% of Earth's land surface, fundamentally altering the climate trajectory
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p style="margin-top:40px; font-size:0.7rem; color:rgba(102,102,102,0.5); font-style:italic; max-width:700px; line-height:1.6;">
+    Calculation basis: Estimated global trading volume (equities + forex + bonds + derivatives trading) exceeds $35 trillion/day across all markets. 0.1% = ~$35B/year (assuming 250 trading days, conservative net figure). Actual fee-based estimates may vary. Sources: BIS, WFE, OECD, IEA, World Bank, FAO, WEF.
+  </p>
+</section>
+
+<!-- ─── Closing ─── -->
+<div class="closing">
+  <div class="closing-glow"></div>
+  <div class="closing-cycle">
+    <span class="ku">Kū</span>
+    <span class="arrow">→</span>
+    <span class="lono">Lono</span>
+    <span class="arrow">→</span>
+    <span class="ku">Kū</span>
+    <span class="arrow">→</span>
+    <span class="lono">Lono</span>
+  </div>
+  <h2 class="closing-title">The money already exists.<br>The <span class="gold-word">direction</span> is what's missing.</h2>
+  <p class="closing-sub">
+    Kulono proposes a valve — not a tax, not a mandate — a structural return. Where the virtual generates, the real receives. Where Kū extracts, Lono restores. The cycle completes.
+  </p>
+  <a href="anchor.html" class="closing-cta">See the Anchors →</a>
+</div>
+
+<!-- ─── Footer ─── -->
+<div class="footer">Kulono · ticalasi · reality anchor</div>
+
+<script>
+  // Intersection Observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Animated bar fills on scroll
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const fills = entry.target.querySelectorAll('.bar-fill');
+        fills.forEach(fill => {
+          const w = fill.getAttribute('data-width');
+          fill.style.width = '0%';
+          setTimeout(() => { fill.style.width = w + '%'; }, 100);
+        });
+        barObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.comparison-item').forEach(el => barObserver.observe(el));
+</script>
+
+</body>
+</html>
