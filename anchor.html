@@ -385,11 +385,175 @@
     font-weight: 500;
   }
 
+  /* ─── Responsive ─── */
+
+  /* 通用修复 */
+  .hero h1, .hero-sub, .verify-text {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  .project-card, .stat {
+    max-width: 100%;
+  }
+
+  @media (max-width: 1024px) {
+    .nav {
+      padding: 14px 24px;
+    }
+    .nav-links {
+      gap: 20px;
+    }
+    .hero {
+      padding: 60px 24px 40px;
+    }
+    .flow {
+      padding: 32px 24px;
+    }
+    .flow-node {
+      padding: 20px 24px;
+      min-width: 120px;
+    }
+    .stats-bar {
+      margin: 0 24px;
+    }
+    .projects {
+      padding: 40px 24px;
+    }
+    .project-grid {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+  }
+
   @media (max-width: 768px) {
-    .stats-bar { grid-template-columns: 1fr; }
-    .flow { flex-direction: column; }
-    .flow-arrow .line { width: 2px; height: 40px; background: linear-gradient(180deg, var(--ku), var(--gold), var(--lono)); }
-    .flow-arrow .line::after { right: -3px; top: auto; bottom: -1px; border-right: 2px solid var(--lono); border-bottom: 2px solid var(--lono); border-top: none; transform: rotate(45deg); }
+    .nav {
+      padding: 12px 16px;
+    }
+    .nav-links {
+      gap: 14px;
+    }
+    .nav-links a {
+      font-size: 0.6rem;
+    }
+    .hero {
+      padding: 48px 16px 32px;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 5vw, 2.5rem);
+    }
+    .hero-sub {
+      font-size: 0.8rem;
+      margin-top: 16px;
+    }
+    .flow {
+      flex-direction: column;
+      padding: 24px 16px;
+      gap: 16px;
+    }
+    .flow-arrow .line {
+      width: 2px;
+      height: 40px;
+      background: linear-gradient(180deg, var(--ku), var(--gold), var(--lono));
+    }
+    .flow-arrow .line::after {
+      right: -3px;
+      top: auto;
+      bottom: -1px;
+      border-right: 2px solid var(--lono);
+      border-bottom: 2px solid var(--lono);
+      border-top: none;
+      transform: rotate(45deg);
+    }
+    .flow-node {
+      padding: 16px 20px;
+      min-width: 100px;
+    }
+    .stats-bar {
+      grid-template-columns: 1fr;
+      margin: 0 16px;
+    }
+    .stat {
+      padding: 20px 16px;
+    }
+    .stat .number {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+    }
+    .projects {
+      padding: 32px 16px;
+    }
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+    .project-card {
+      padding: 20px;
+    }
+    .verify-section {
+      padding: 32px 16px 48px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .nav-links {
+      gap: 8px;
+    }
+    .nav-links a {
+      font-size: 0.5rem;
+      letter-spacing: 0.08em;
+    }
+    .hero h1 {
+      font-size: 1.5rem;
+    }
+    .hero-sub {
+      font-size: 0.72rem;
+      line-height: 1.6;
+    }
+    .flow-node {
+      padding: 12px 16px;
+      min-width: 80px;
+    }
+    .flow-node .icon {
+      font-size: 1.4rem;
+    }
+    .flow-node .label {
+      font-size: 0.55rem;
+    }
+    .stat .number {
+      font-size: 1.3rem;
+    }
+    .stat .desc {
+      font-size: 0.6rem;
+    }
+    .project-card {
+      padding: 16px;
+    }
+    .card-header {
+      gap: 8px;
+    }
+    .card-icon {
+      width: 32px;
+      height: 32px;
+      font-size: 1rem;
+    }
+    .card-name {
+      font-size: 0.75rem;
+    }
+    .card-metrics {
+      gap: 8px;
+    }
+    .card-metric-value {
+      font-size: 0.8rem;
+    }
+    .verify-section {
+      padding: 24px 12px 36px;
+    }
+    .verify-text {
+      font-size: 0.72rem;
+    }
+    .verify-badge {
+      padding: 8px 16px;
+    }
+    .verify-badge span {
+      font-size: 0.55rem;
+    }
   }
 </style>
 </head>

@@ -448,15 +448,152 @@
     margin-top: 2px;
   }
 
-  /* Responsive */
+  /* ─── Responsive ─── */
+
+  /* 通用修复 */
+  .chart-pair, .chart-header, .reality-trace, .impact-text {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  .market-card, .project-card, .whatif-card, .comparison-item {
+    max-width: 100%;
+  }
+  .chart-svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 1024px) {
+    .main {
+      grid-template-columns: 1fr 280px;
+    }
+    .nav {
+      padding: 14px 24px;
+    }
+    .nav-links {
+      gap: 20px;
+    }
+    .chart-body {
+      padding: 16px;
+    }
+    .sidebar {
+      font-size: 0.95em;
+    }
+  }
+
   @media (max-width: 768px) {
     .main {
       grid-template-columns: 1fr;
       grid-template-rows: auto auto;
+      height: auto;
     }
-    .chart-area { min-height: 50vh; }
-    .sidebar { border-top: 1px solid var(--border); }
-    .nav-links { gap: 16px; }
+    .chart-area {
+      min-height: 50vh;
+      border-right: none;
+    }
+    .sidebar {
+      border-top: 1px solid var(--border);
+    }
+    .nav {
+      padding: 12px 16px;
+    }
+    .nav-links {
+      gap: 14px;
+    }
+    .nav-links a {
+      font-size: 0.6rem;
+    }
+    .nav-anchor {
+      font-size: 0.55rem;
+      padding: 4px 10px;
+    }
+    .chart-header {
+      padding: 12px 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chart-pair .price {
+      font-size: 1.2rem;
+    }
+    .chart-pair .symbol {
+      font-size: 0.95rem;
+    }
+    .order-form {
+      padding: 16px;
+    }
+    .reality-trace {
+      padding: 16px;
+    }
+    .impact-feed {
+      padding: 16px;
+    }
+    .field input {
+      font-size: 0.8rem;
+      padding: 8px 10px;
+    }
+    .order-btn {
+      padding: 10px;
+      font-size: 0.7rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .nav-links {
+      gap: 8px;
+    }
+    .nav-links a {
+      font-size: 0.5rem;
+      letter-spacing: 0.08em;
+    }
+    .nav-anchor {
+      display: none;
+    }
+    .chart-pair .price {
+      font-size: 1rem;
+    }
+    .chart-pair .change {
+      font-size: 0.7rem;
+    }
+    .chart-tabs span {
+      font-size: 0.55rem;
+      padding: 3px 7px;
+    }
+    .chart-area {
+      min-height: 40vh;
+    }
+    .chart-body {
+      padding: 10px;
+    }
+    .order-form {
+      padding: 12px;
+    }
+    .reality-trace {
+      padding: 12px;
+    }
+    .impact-feed {
+      padding: 12px;
+    }
+    .impact-item {
+      gap: 8px;
+      padding: 8px 0;
+    }
+    .impact-icon {
+      width: 28px;
+      height: 28px;
+      font-size: 0.8rem;
+    }
+    .impact-text .desc {
+      font-size: 0.65rem;
+    }
+    .impact-text .metric {
+      font-size: 0.6rem;
+    }
+    .order-btn {
+      width: 100%;
+    }
+    .trace-row {
+      padding: 6px 0;
+    }
   }
 </style>
 </head>

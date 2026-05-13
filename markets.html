@@ -580,20 +580,261 @@
   }
 
   /* ─── Responsive ─── */
+  /* ─── Responsive (expanded) ─── */
+
+  /* 通用修复 */
+  .hero-title, .hero-subtitle, .comp-headline, .section-desc,
+  .whatif-result-text, .closing-sub, .card-detail {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  .market-card, .whatif-card, .comparison-item, .index-chip {
+    max-width: 100%;
+  }
+  .sparkline svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 1024px) {
+    .nav {
+      padding: 14px 24px;
+    }
+    .nav-links {
+      gap: 18px;
+    }
+    section {
+      padding: 64px 24px;
+    }
+    .hero {
+      padding: 64px 24px 48px;
+    }
+    .market-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .whatif-grid {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    .bar-label {
+      width: 100px;
+    }
+    .comparison-item {
+      padding: 28px 24px;
+    }
+    .closing {
+      padding: 80px 24px;
+    }
+  }
+
   @media (max-width: 768px) {
-    .nav { padding: 12px 16px; }
-    .nav-links { gap: 14px; }
-    section { padding: 48px 16px; }
-    .hero { padding: 60px 16px 40px; min-height: 70vh; }
-    .market-grid { grid-template-columns: 1fr; }
-    .whatif-grid { grid-template-columns: 1fr; }
-    .bar-label { width: 80px; font-size: 0.55rem; }
-    .comparison-item { padding: 24px 20px; }
+    .nav {
+      padding: 12px 16px;
+    }
+    .nav-links {
+      gap: 14px;
+    }
+    .nav-links a {
+      font-size: 0.55rem;
+    }
+    section {
+      padding: 48px 16px;
+    }
+    .hero {
+      padding: 48px 16px 32px;
+      min-height: 60vh;
+    }
+    .hero-title {
+      font-size: clamp(1.6rem, 5vw, 2.5rem);
+    }
+    .hero-subtitle {
+      font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+      margin-top: 20px;
+    }
+    .hero-divider {
+      height: 50px;
+      margin-top: 28px;
+    }
+    .market-grid {
+      grid-template-columns: 1fr;
+    }
+    .market-card {
+      padding: 24px 20px;
+    }
+    .whatif-grid {
+      grid-template-columns: 1fr;
+    }
+    .whatif-card {
+      padding: 24px 20px;
+    }
+    .whatif-pct {
+      font-size: 2rem;
+    }
+    .bar-label {
+      width: 80px;
+      font-size: 0.55rem;
+    }
+    .bar-compare {
+      gap: 12px;
+    }
+    .bar-row {
+      gap: 8px;
+    }
+    .bar-value {
+      font-size: 0.6rem;
+      margin-left: 8px;
+    }
+    .comparison-item {
+      padding: 24px 16px;
+    }
+    .comp-headline {
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      margin-bottom: 32px;
+    }
+    .closing {
+      padding: 64px 16px;
+    }
+    .closing-title {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+    }
+    .closing-sub {
+      font-size: 0.8rem;
+    }
+    .closing-cta {
+      padding: 10px 24px;
+      font-size: 0.6rem;
+    }
+    .footer {
+      padding: 20px 16px;
+    }
+    .index-row {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+    .sparkline {
+      opacity: 0.3;
+    }
   }
 
   @media (max-width: 480px) {
-    .index-row { grid-template-columns: 1fr 1fr; }
+    .nav-links {
+      gap: 8px;
+    }
+    .nav-links a {
+      font-size: 0.48rem;
+      letter-spacing: 0.08em;
+    }
+    section {
+      padding: 32px 12px;
+    }
+    .hero {
+      padding: 36px 12px 24px;
+      min-height: 50vh;
+    }
+    .hero-title {
+      font-size: 1.5rem;
+    }
+    .hero-subtitle {
+      font-size: 0.7rem;
+    }
+    .hero-divider {
+      height: 36px;
+      margin-top: 20px;
+    }
+    .market-card {
+      padding: 20px 16px;
+    }
+    .card-value {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+    }
+    .card-name {
+      font-size: 0.85rem;
+    }
+    .card-detail {
+      font-size: 0.68rem;
+    }
+    .index-row {
+      grid-template-columns: 1fr 1fr;
+    }
+    .index-chip {
+      padding: 10px 12px;
+    }
+    .index-chip-val {
+      font-size: 0.9rem;
+    }
+    .comparison-item {
+      padding: 20px 12px;
+    }
+    .comp-headline {
+      font-size: 0.9rem;
+    }
+    .bar-label {
+      width: 60px;
+      font-size: 0.48rem;
+    }
+    .bar-track {
+      height: 18px;
+    }
+    .bar-value {
+      font-size: 0.55rem;
+      margin-left: 4px;
+    }
+    .whatif-card {
+      padding: 20px 16px;
+    }
+    .whatif-pct {
+      font-size: 1.6rem;
+    }
+    .whatif-pct-label {
+      font-size: 0.52rem;
+      margin-bottom: 16px;
+    }
+    .whatif-result-row {
+      gap: 10px;
+    }
+    .whatif-icon {
+      width: 30px;
+      height: 30px;
+      font-size: 0.85rem;
+    }
+    .whatif-result-text {
+      font-size: 0.72rem;
+    }
+    .closing {
+      padding: 48px 12px;
+    }
+    .closing-title {
+      font-size: 1.2rem;
+    }
+    .closing-sub {
+      font-size: 0.72rem;
+    }
+    .closing-cta {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 10px 16px;
+    }
+    .closing-cycle {
+      font-size: 0.55rem;
+      gap: 6px;
+    }
+    .footer {
+      padding: 16px 12px;
+      font-size: 0.45rem;
+    }
+    .sparkline {
+      display: none;
+    }
+    .section-title {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    }
+    .section-desc {
+      font-size: 0.75rem;
+    }
   }
+
+
 
   /* ─── Animations ─── */
   .fade-in {

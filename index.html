@@ -198,6 +198,124 @@
     90% { opacity: 1; }
     100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
   }
+
+  /* ─── Responsive ─── */
+
+  /* 通用修复 */
+  .concept, .subtitle, .title {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  @media (max-width: 1024px) {
+    .glow-ku, .glow-lono {
+      width: 60vw;
+      height: 60vw;
+    }
+    .nav-enter {
+      right: 20px;
+      gap: 16px;
+    }
+    .concept {
+      max-width: 360px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .scene {
+      padding: 0 16px;
+    }
+    .title {
+      font-size: clamp(2rem, 10vw, 4rem);
+    }
+    .subtitle {
+      font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+      margin-top: 16px;
+    }
+    .divider {
+      height: 80px;
+      margin-bottom: 24px;
+    }
+    .concept {
+      margin-top: 40px;
+      max-width: 300px;
+      font-size: 0.8rem;
+      padding: 0 8px;
+    }
+    .cycle-mark {
+      margin-top: 32px;
+      gap: 10px;
+      font-size: 0.65rem;
+    }
+    .nav-enter {
+      top: 16px;
+      right: 16px;
+      gap: 12px;
+    }
+    .nav-enter a {
+      font-size: 0.55rem;
+    }
+    .glow-ku, .glow-lono {
+      width: 70vw;
+      height: 70vw;
+    }
+    .footer {
+      bottom: 16px;
+      font-size: 0.5rem;
+    }
+    /* 减少动画 */
+    .dot {
+      animation-duration: 12s !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .title {
+      font-size: 2rem;
+    }
+    .subtitle {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+    }
+    .concept {
+      margin-top: 28px;
+      font-size: 0.72rem;
+      line-height: 1.6;
+      max-width: 260px;
+    }
+    .cycle-mark {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.6rem;
+    }
+    .nav-enter {
+      top: 12px;
+      right: 12px;
+      gap: 8px;
+    }
+    .nav-enter a {
+      font-size: 0.5rem;
+      letter-spacing: 0.1em;
+    }
+    .glow-ku {
+      width: 90vw;
+      height: 90vw;
+    }
+    .glow-lono {
+      width: 90vw;
+      height: 90vw;
+    }
+    .divider {
+      height: 60px;
+      margin-bottom: 16px;
+    }
+    .footer {
+      font-size: 0.45rem;
+      bottom: 12px;
+    }
+  }
+
 </style>
 </head>
 <body>
