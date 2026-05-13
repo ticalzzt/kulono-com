@@ -1,0 +1,71 @@
+{
+  "last_updated": "2026-05-13T18:52:13.341355+08:00",
+  "source": "Stooq / Frankfurter / Stooq",
+  "disclaimer": "Data sourced from public market feeds. May be delayed up to 15 minutes. For informational purposes only.",
+  "indices": {
+    "SP500": {
+      "value": 7401.0,
+      "change": -0.16,
+      "name": "S&P 500"
+    },
+    "NASDAQ": {
+      "value": 26088.2,
+      "change": -0.71,
+      "name": "Nasdaq Composite"
+    },
+    "NIKKEI": {
+      "value": 63272.11,
+      "change": 0.84,
+      "name": "Nikkei 225"
+    },
+    "CSI300": {
+      "value": 3891.42,
+      "change": -0.32,
+      "name": "CSI 300"
+    },
+    "STOXX": {
+      "value": 5047.65,
+      "change": 0.21,
+      "name": "STOXX Europe 50"
+    },
+    "HSI": {
+      "value": 26388.44,
+      "change": 0.15,
+      "name": "Hang Seng Index"
+    }
+  },
+  "forex": {
+    "EUR_USD": {
+      "value": 1.1738,
+      "name": "EUR/USD"
+    },
+    "USD_JPY": {
+      "value": 157.5907,
+      "name": "USD/JPY"
+    },
+    "GBP_USD": {
+      "value": 1.3523,
+      "name": "GBP/USD"
+    },
+    "USD_CNY": {
+      "value": 6.7921,
+      "name": "USD/CNY"
+    }
+  },
+  "crypto": {
+    "total_market_cap": 2757969310345,
+    "btc_dominance": 0.58,
+    "btc_price": 80789.0,
+    "eth_price": 2307.0
+  },
+  "bonds": {
+    "US10Y": {
+      "value": 4.48,
+      "name": "US 10-Year Treasury"
+    },
+    "US2Y": {
+      "value": 4.92,
+      "name": "US 2-Year Treasury"
+    }
+  }
+}

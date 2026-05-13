@@ -606,6 +606,16 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  /* ─── Dynamic data styles ─── */
+  .index-chip-val {
+    min-height: 1.4em;
+  }
+  #data-footer {
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+  }
+
 </style>
 </head>
 <body>
@@ -642,85 +652,97 @@
   <h2 class="section-title">The Weight of Virtual Capital</h2>
   <p class="section-desc">Current scale of the world's financial markets. Each number represents a force powerful enough to reshape reality — if redirected.</p>
 
-  <div class="market-grid">
+  <div class="market-grid" id="market-grid">
 
-    <!-- Global Equities -->
+    <!-- Equity Markets — Dynamic -->
     <div class="market-card ku-card fade-in">
       <div class="card-label">Equity Markets</div>
-      <div class="card-name">Global Stock Market Capitalization</div>
-      <div class="card-value">$127.4T</div>
-      <div class="card-unit">Trillion USD · Early 2026</div>
-      <div class="index-row">
+      <div class="card-name">Global Stock Indices</div>
+      <div class="card-value" style="font-size:clamp(1.2rem,2vw,1.6rem);">Live</div>
+      <div class="card-unit">Major Indices · Real-time</div>
+      <div class="index-row" id="indices-row">
         <div class="index-chip">
           <div class="index-chip-name">S&P 500</div>
-          <div class="index-chip-val">$28.5T</div>
+          <div class="index-chip-val" data-key="SP500">—</div>
         </div>
         <div class="index-chip">
           <div class="index-chip-name">Nasdaq</div>
-          <div class="index-chip-val">$26.2T</div>
+          <div class="index-chip-val" data-key="NASDAQ">—</div>
         </div>
         <div class="index-chip">
           <div class="index-chip-name">CSI 300</div>
-          <div class="index-chip-val">$14.4T</div>
+          <div class="index-chip-val" data-key="CSI300">—</div>
         </div>
         <div class="index-chip">
           <div class="index-chip-name">Nikkei 225</div>
-          <div class="index-chip-val">$8.1T</div>
+          <div class="index-chip-val" data-key="NIKKEI">—</div>
         </div>
         <div class="index-chip">
           <div class="index-chip-name">STOXX Europe</div>
-          <div class="index-chip-val">$7.8T</div>
+          <div class="index-chip-val" data-key="STOXX">—</div>
         </div>
         <div class="index-chip">
-          <div class="index-chip-name">HKEX</div>
-          <div class="index-chip-val">$7.5T</div>
+          <div class="index-chip-name">Hang Seng</div>
+          <div class="index-chip-val" data-key="HSI">—</div>
         </div>
       </div>
       <svg class="sparkline" width="100%" height="32" viewBox="0 0 200 32" preserveAspectRatio="none">
         <polyline fill="none" stroke="rgba(180,50,20,0.4)" stroke-width="1.5"
           points="0,28 20,26 40,22 60,24 80,18 100,16 120,12 140,10 160,8 180,6 200,4"/>
       </svg>
-      <div class="card-source">Source: PwC Global Top 100 (2026); WFE; Siblis Research</div>
+      <div class="card-source">Source: Stooq / yfinance</div>
     </div>
 
-    <!-- Global Bonds -->
+    <!-- Bond Yields — Dynamic -->
     <div class="market-card gold-card fade-in">
       <div class="card-label">Fixed Income</div>
-      <div class="card-name">Global Bond Market Outstanding</div>
-      <div class="card-value">$127.4T</div>
-      <div class="card-unit">Trillion USD · 2026 Estimate</div>
+      <div class="card-name">US Treasury Yields</div>
+      <div class="card-value" id="bond-10y-value">—</div>
+      <div class="card-unit" id="bond-2y-unit">—</div>
       <div class="card-detail">
-        OECD sovereign outstanding: <span>$61T</span><br>
-        Corporate bonds outstanding: <span>$36.4T</span><br>
-        Annual issuance 2026 forecast: <span>$10.8T</span>
+        10-Year Treasury Yield: <span id="bond-10y-detail">—</span><br>
+        2-Year Treasury Yield: <span id="bond-2y-detail">—</span><br>
+        Yield curve signals long-term borrowing costs and recession risk.
       </div>
       <svg class="sparkline" width="100%" height="32" viewBox="0 0 200 32" preserveAspectRatio="none">
         <polyline fill="none" stroke="rgba(200,150,10,0.4)" stroke-width="1.5"
           points="0,24 25,22 50,20 75,22 100,18 125,14 150,10 175,8 200,6"/>
       </svg>
-      <div class="card-source">Source: OECD Global Debt Report 2026; Mordor Intelligence</div>
+      <div class="card-source">Source: yfinance</div>
     </div>
 
-    <!-- Forex -->
+    <!-- Forex — Dynamic -->
     <div class="market-card ku-card fade-in">
       <div class="card-label">Foreign Exchange</div>
-      <div class="card-name">Forex Daily Trading Volume</div>
-      <div class="card-value">$9.5T</div>
-      <div class="card-unit">Trillion USD per day · April 2025</div>
-      <div class="card-detail">
-        FX Spot: <span>$3.0T/day</span> (+42% from 2022)<br>
-        FX Swaps: <span>$4.0T/day</span><br>
-        Outright Forwards: <span>$1.8T/day</span> (+60% from 2022)<br>
-        30× global daily GDP
+      <div class="card-name">Key Currency Rates</div>
+      <div class="card-value" style="font-size:clamp(1.2rem,2vw,1.6rem);">Live</div>
+      <div class="card-unit">ECB Reference Rates</div>
+      <div class="index-row" id="forex-row">
+        <div class="index-chip">
+          <div class="index-chip-name">EUR/USD</div>
+          <div class="index-chip-val" data-forex="EUR_USD">—</div>
+        </div>
+        <div class="index-chip">
+          <div class="index-chip-name">USD/JPY</div>
+          <div class="index-chip-val" data-forex="USD_JPY">—</div>
+        </div>
+        <div class="index-chip">
+          <div class="index-chip-name">GBP/USD</div>
+          <div class="index-chip-val" data-forex="GBP_USD">—</div>
+        </div>
+        <div class="index-chip">
+          <div class="index-chip-name">USD/CNY</div>
+          <div class="index-chip-val" data-forex="USD_CNY">—</div>
+        </div>
       </div>
       <svg class="sparkline" width="100%" height="32" viewBox="0 0 200 32" preserveAspectRatio="none">
         <polyline fill="none" stroke="rgba(180,50,20,0.4)" stroke-width="1.5"
           points="0,26 30,24 60,22 90,18 120,16 150,12 180,6 200,4"/>
       </svg>
-      <div class="card-source">Source: BIS Triennial Central Bank Survey, April 2025</div>
+      <div class="card-source">Source: Frankfurter / ECB</div>
     </div>
 
-    <!-- Derivatives -->
+    <!-- Derivatives — Static (no live data source) -->
     <div class="market-card gold-card fade-in">
       <div class="card-label">Derivatives</div>
       <div class="card-name">OTC Derivatives Notional Outstanding</div>
@@ -739,27 +761,35 @@
       <div class="card-source">Source: BIS OTC Derivatives Statistics, H1 2025</div>
     </div>
 
-    <!-- Crypto -->
+    <!-- Crypto — Dynamic -->
     <div class="market-card lono-card fade-in" style="grid-column: 1 / -1;">
       <div class="card-label">Digital Assets</div>
-      <div class="card-name">Cryptocurrency Total Market Capitalization</div>
-      <div class="card-value" style="display:inline;">$3.4T</div>
-      <div class="card-unit" style="display:inline; margin-left:8px;">Trillion USD · Early 2026</div>
+      <div class="card-name">Cryptocurrency Market</div>
+      <div class="card-value" style="display:inline;" id="crypto-mcap-value">—</div>
+      <div class="card-unit" style="display:inline; margin-left:8px;" id="crypto-mcap-unit">—</div>
       <div class="card-detail" style="margin-top:16px; max-width:600px;">
-        Bitcoin dominance: <span>~58%</span> · Ethereum: <span>~10%</span> ·
-        Daily spot volume: <span>~$150B</span><br>
+        Bitcoin: <span id="crypto-btc">—</span> · Ethereum: <span id="crypto-eth">—</span> ·
+        BTC Dominance: <span id="crypto-dom">—</span><br>
         Less than 2.7% of global equity market cap — yet already exceeds the GDP of France.
       </div>
       <svg class="sparkline" width="100%" height="32" viewBox="0 0 200 32" preserveAspectRatio="none">
         <polyline fill="none" stroke="rgba(20,140,80,0.4)" stroke-width="1.5"
           points="0,28 20,24 40,26 60,18 80,22 100,14 120,10 140,16 160,8 180,6 200,5"/>
       </svg>
-      <div class="card-source">Source: CoinGecko; CompaniesMarketCap</div>
+      <div class="card-source">Source: CoinGecko; Stooq</div>
     </div>
 
   </div>
-</section>
 
+  <!-- Data timestamp & disclaimer -->
+  <div id="data-footer" style="margin-top:48px; text-align:center;">
+    <div id="data-timestamp" style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--text-dim); margin-bottom:8px;"></div>
+    <div style="font-size:0.6rem; color:rgba(102,102,102,0.5); font-style:italic; max-width:600px; margin:0 auto; line-height:1.5;">
+      数据源自公开市场信息，可能存在15分钟延迟，仅供展示参考<br>
+      Data sourced from public market feeds. May be delayed up to 15 minutes. For informational purposes only.
+    </div>
+  </div>
+</section>
 <!-- ─── Comparison Impact ─── -->
 <section>
   <div class="section-label">Section 02</div>
@@ -995,7 +1025,170 @@
 <div class="footer">Kulono · ticalasi · reality anchor</div>
 
 <script>
-  // Intersection Observer for fade-in
+  // ─── Market Data Loader ───
+  (async function loadMarketData() {
+    const UNAVAILABLE = '数据暂时不可用';
+    const GREEN = '#148c50';
+    const RED = '#b43214';
+
+    function fmtNum(n, decimals) {
+      if (n == null) return UNAVAILABLE;
+      return n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    }
+
+    function fmtChange(c) {
+      if (c == null) return '';
+      const sign = c >= 0 ? '+' : '';
+      return sign + c.toFixed(2) + '%';
+    }
+
+    function changeColor(c) {
+      if (c == null) return 'var(--text-dim)';
+      return c >= 0 ? GREEN : RED;
+    }
+
+    function fmtCompact(n) {
+      if (n == null) return UNAVAILABLE;
+      if (n >= 1e12) return '$' + (n / 1e12).toFixed(2) + 'T';
+      if (n >= 1e9) return '$' + (n / 1e9).toFixed(1) + 'B';
+      if (n >= 1e6) return '$' + (n / 1e6).toFixed(1) + 'M';
+      return '$' + n.toLocaleString();
+    }
+
+    try {
+      const resp = await fetch('./market-data.json');
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const data = await resp.json();
+
+      // ─── Indices ───
+      document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        const idx = data.indices[key];
+        if (idx && idx.value != null) {
+          const valSpan = document.createElement('span');
+          valSpan.textContent = fmtNum(idx.value, idx.value >= 1000 ? 0 : 2);
+          
+          const changeSpan = document.createElement('span');
+          changeSpan.textContent = ' ' + fmtChange(idx.change);
+          changeSpan.style.color = changeColor(idx.change);
+          changeSpan.style.fontSize = '0.7rem';
+          changeSpan.style.marginLeft = '6px';
+          
+          el.textContent = '';
+          el.appendChild(valSpan);
+          el.appendChild(changeSpan);
+        } else {
+          el.textContent = UNAVAILABLE;
+          el.style.color = 'var(--text-dim)';
+        }
+      });
+
+      // ─── Forex ───
+      document.querySelectorAll('[data-forex]').forEach(el => {
+        const key = el.getAttribute('data-forex');
+        const fx = data.forex[key];
+        if (fx && fx.value != null) {
+          el.textContent = fmtNum(fx.value, 4);
+        } else {
+          el.textContent = UNAVAILABLE;
+          el.style.color = 'var(--text-dim)';
+        }
+      });
+
+      // ─── Bonds ───
+      const us10y = data.bonds && data.bonds.US10Y;
+      const us2y = data.bonds && data.bonds.US2Y;
+      
+      const bond10yEl = document.getElementById('bond-10y-value');
+      const bond2yUnitEl = document.getElementById('bond-2y-unit');
+      const bond10yDetail = document.getElementById('bond-10y-detail');
+      const bond2yDetail = document.getElementById('bond-2y-detail');
+
+      if (us10y && us10y.value != null) {
+        bond10yEl.textContent = us10y.value.toFixed(2) + '%';
+        bond10yDetail.textContent = us10y.value.toFixed(2) + '%';
+      } else {
+        bond10yEl.textContent = UNAVAILABLE;
+        bond10yEl.style.fontSize = '1.2rem';
+        bond10yDetail.textContent = UNAVAILABLE;
+      }
+
+      if (us2y && us2y.value != null) {
+        bond2yUnitEl.textContent = '2Y: ' + us2y.value.toFixed(2) + '%';
+        bond2yDetail.textContent = us2y.value.toFixed(2) + '%';
+      } else {
+        bond2yUnitEl.textContent = '';
+        bond2yDetail.textContent = UNAVAILABLE;
+      }
+
+      // ─── Crypto ───
+      const crypto = data.crypto || {};
+      
+      const mcapEl = document.getElementById('crypto-mcap-value');
+      const mcapUnit = document.getElementById('crypto-mcap-unit');
+      const btcEl = document.getElementById('crypto-btc');
+      const ethEl = document.getElementById('crypto-eth');
+      const domEl = document.getElementById('crypto-dom');
+
+      if (crypto.total_market_cap != null) {
+        mcapEl.textContent = fmtCompact(crypto.total_market_cap);
+        mcapUnit.textContent = 'Total Crypto Market Cap';
+      } else {
+        mcapEl.textContent = UNAVAILABLE;
+        mcapEl.style.fontSize = '1.2rem';
+      }
+
+      if (crypto.btc_price != null) {
+        btcEl.textContent = '$' + fmtNum(crypto.btc_price, 0);
+      } else {
+        btcEl.textContent = UNAVAILABLE;
+      }
+
+      if (crypto.eth_price != null) {
+        ethEl.textContent = '$' + fmtNum(crypto.eth_price, 0);
+      } else {
+        ethEl.textContent = UNAVAILABLE;
+      }
+
+      if (crypto.btc_dominance != null) {
+        domEl.textContent = (crypto.btc_dominance * 100).toFixed(1) + '%';
+      } else {
+        domEl.textContent = UNAVAILABLE;
+      }
+
+      // ─── Timestamp ───
+      const tsEl = document.getElementById('data-timestamp');
+      if (data.last_updated) {
+        const dt = new Date(data.last_updated);
+        tsEl.textContent = 'Updated: ' + dt.toLocaleString('zh-CN', { 
+          year: 'numeric', month: '2-digit', day: '2-digit',
+          hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+        });
+      }
+
+    } catch (err) {
+      console.error('Market data load failed:', err);
+      // Graceful degradation: show "data unavailable" in all dynamic fields
+      document.querySelectorAll('[data-key], [data-forex]').forEach(el => {
+        if (!el.textContent.trim() || el.textContent.trim() === '—') {
+          el.textContent = UNAVAILABLE;
+          el.style.color = 'var(--text-dim)';
+        }
+      });
+      const mcapEl = document.getElementById('crypto-mcap-value');
+      if (mcapEl && mcapEl.textContent === '—') {
+        mcapEl.textContent = UNAVAILABLE;
+        mcapEl.style.fontSize = '1.2rem';
+      }
+      const bondEl = document.getElementById('bond-10y-value');
+      if (bondEl && bondEl.textContent === '—') {
+        bondEl.textContent = UNAVAILABLE;
+        bondEl.style.fontSize = '1.2rem';
+      }
+    }
+  })();
+
+  // ─── Intersection Observer for fade-in ───
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1006,7 +1199,7 @@
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // Animated bar fills on scroll
+  // ─── Animated bar fills on scroll ───
   const barObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
